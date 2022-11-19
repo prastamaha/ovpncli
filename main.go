@@ -24,7 +24,7 @@ func main() {
 	app := &cli.App{
 		Name:                   "ovpncli",
 		Usage:                  "manage openvpn profiles",
-		Version:                "v0.1.0",
+		Version:                "v0.1.1",
 		EnableBashCompletion:   true,
 		Suggest:                true,
 		UseShortOptionHandling: true,
