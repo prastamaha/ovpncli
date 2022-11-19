@@ -52,6 +52,15 @@ func ConnectProfile(DB *bbolt.DB) *cli.Command {
 		Aliases:   profileAlias,
 		Usage:     "connect profile",
 		UsageText: "ovpncli connect profile [name]",
+		Flags: []cli.Flag{
+			&cli.IntFlag{
+				Name:     "timeout",
+				Required: false,
+				Aliases:  []string{"t"},
+				Usage:    "connection timeout",
+				Value:    10,
+			},
+		},
 		Action: func(ctx *cli.Context) error {
 			// check user is root
 			currentUser, err := user.Current()
@@ -97,6 +106,8 @@ func ConnectProfile(DB *bbolt.DB) *cli.Command {
 			openvpn3.SelfCheck(logger)
 
 			config := openvpn3.NewConfig(string(profileResponse.Profile))
+			config.ConnTimeout = ctx.Int("timeout")
+			config.DisableClientCert = false
 
 			var username string
 			var password []byte
